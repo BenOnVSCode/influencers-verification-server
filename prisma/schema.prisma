@@ -1,0 +1,50 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Claim {
+  id                 String            @id @default(uuid())
+  text               String
+  date_range         String
+  category           String
+  confidence_score   Float
+  verification_status VerificationStatus
+  reasoning          String            @db.Text
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  // Relations
+  author             Influencer        @relation(fields: [authorId], references: [id])
+  authorId           String
+
+  @@map("claims")
+}
+
+model Influencer {
+  id             String   @id @default(uuid())
+  name           String
+  twitter_handle String   @unique
+  category       String
+  trustScore     Float    @default(0)
+  trend          Boolean  @default(false)
+  claims         Claim[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("influencers")
+}
+
+enum VerificationStatus {
+  Verified
+  Questionable
+  Debunked
+  Null
+} 
