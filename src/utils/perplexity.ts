@@ -20,7 +20,6 @@ export function extractClaims(response: string): string[] {
         .map(claim => claim.trim()) // Remove extra spaces
         .filter(claim => claim); // Remove empty claims
 }
-
 export function parseClaims(data) {
     // Define a function to safely parse the claims from the input string
     const claims = [];
