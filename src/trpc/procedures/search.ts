@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { getClaimsByInfluencer, checkClaimsWithJournals } from "../../services/perplexity";
-import { publicProcedure } from "./publicProcedure";
-import { parseClaims } from "../../utils/perplexity";
+import { getClaimsByInfluencer, checkClaimsWithJournals } from "../../services/perplexity.js";
+import { publicProcedure } from './publicProcedure.js';
+import { parseClaims } from "../../utils/perplexity.js";
 
 export const searchProcedure = publicProcedure
     .input(

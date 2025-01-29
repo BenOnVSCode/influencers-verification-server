@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { checkClaimsWithJournalsPrompt, prompt }from "../LLM/prompt";
-import { extractClaims } from "../utils/perplexity";
+import { checkClaimsWithJournalsPrompt, prompt }from "../LLM/prompt.js";
+import { extractClaims } from "../utils/perplexity.js";
 
 
 

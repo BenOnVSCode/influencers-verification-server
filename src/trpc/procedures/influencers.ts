@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { router } from '../trpc';
-import { publicProcedure } from './publicProcedure';
+import { router } from '../trpc.js';
+import { publicProcedure } from './publicProcedure.js';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();

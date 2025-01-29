@@ -1,7 +1,7 @@
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import express from 'express';
-import { appRouter } from './trpc';
-import { createContext } from './trpc/context';
+import { appRouter } from './trpc/index.js';
+import { createContext } from './trpc/context.js';
 import { TRPCError } from '@trpc/server';
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -37,6 +37,6 @@ app.use(
   })
 );
 
-app.listen(port, () => {
+app.listen({port, host: "0.0.0.0"}, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

@@ -1,9 +1,9 @@
 import { initTRPC } from '@trpc/server';
-import { createContext } from './context';
-import { searchProcedure } from './procedures/search';
-import { router } from './trpc';
-import { influencerRouter } from './procedures/influencers';
-import { claimRouter } from './procedures/claims';
+import { createContext } from './context.js';
+import { searchProcedure } from './procedures/search.js';
+import { router } from './trpc.js';
+import { influencerRouter } from './procedures/influencers.js';
+import { claimRouter } from './procedures/claims.js';
 
 
 // Initialize tRPC with context
