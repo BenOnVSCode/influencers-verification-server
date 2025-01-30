@@ -17,8 +17,5 @@ describe('Perplexity API', () => {
         // First get the claims
         const claims = await getClaimsByInfluencer(name, 50);
         console.log(claims);
-        
-        const checkedClaims = await checkClaimsWithJournals(claims, journals);
-        console.log(checkedClaims);
     });
 });

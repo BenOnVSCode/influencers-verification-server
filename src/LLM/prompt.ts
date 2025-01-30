@@ -11,15 +11,20 @@ export const prompt = `
     Please always make sure to provide the data in the following format:
     Format the results as follow:
     [
-        {claims each one in a new line, seperated by a this symbol |}
+        {claims each one in a new line, seperated by a this symbol;;the source link of the claim |}
     ]
 `
 
 export const checkClaimsWithJournalsPrompt = `
 You're working on a tool that verifies health claims made by influencers by cross-referencing them with credible scientific research. 
-Given a list of claims and scientific journals, your task is to check each claim's validity and assign a confidence score based on the evidence found in these journals.
+Given a list of claims with source link and scientific journals, your task is to check each claim's validity and assign a confidence score based on the evidence found in these journals.
 Make sure to return all the claims you were given nothing less nothing more, same format as the input, same amount of claims given to you.
 Please do not respond with anything else than the required data, try to not respond with any text/explanation. just the data.
+Make sure to include the journals that verify and debunk the claim in the output.
+If the claim is verified, make sure to include the journals that verify the claim in the output.
+If the claim is debunked, make sure to include the journals that debunk the claim in the output.
+If the claim is questionable, make sure to include the journals that verify and debunk the claim in the output.
+If the journal does not verify or debunk the claim, make sure to include the journal in the output on journal_not_verifying_nor_debunking.
 Instructions:
 1. **Claims Format**:
    - All claims should be written plainly, without any special characters or asterisks around them.
@@ -58,14 +63,21 @@ Instructions:
        - **Questionable**: Score 60-80
        - **Debunked**: Score 0-59
      - **Reasoning**: A brief explanation (1-2 sentences) supporting the assigned score based on the evidence found in the journals.
-   
+     - **Source Link**: The source link of the claim.
+     - **Journals Verifying**: The journals that verify the claim.
+     - **Journals Debunking**: The journals that debunk the claim.
+     - **Journals Not Verifying Nor Debunking**: The journals that do not verify nor debunk the claim.
    **Output Format for Each Claim (JSON-like structure)**:
    {
        "claim_text": ,
        "category": , 
        "confidence_score": ,
        "verification_status": ,
-       "reasoning": ""
+       "reasoning": "",
+       "source_link": "",
+       "journals_verifying": [],
+       "journals_debunking": [],
+       "journals_not_verifying_nor_debunking": []
    }
 
 For example:
@@ -74,7 +86,11 @@ For example:
     "category": "Medicine",
     "confidence_score": 95,
     "verification_status": "Verified",
-    "reasoning": "Multiple studies in PubMed and Nature confirm that morning sunlight helps synchronize the circadian rhythm, supporting the claim with strong evidence."
+    "reasoning": "Multiple studies in PubMed and Nature confirm that morning sunlight helps synchronize the circadian rhythm, supporting the claim with strong evidence.",
+    "source_link": "https://pubmed.ncbi.nlm.nih.gov/1234567890/",
+    "journals_verifying": ["PubMed", "Nature"],
+    "journals_debunking": ["JAMA"],
+    "journals_not_verifying_nor_debunking": ["Science"]
 }
 
 If you are unable to verify a claim using the provided journals, please assign a low confidence score (0 - 50), and mark it as 'Debunked'. Ensure all claims follow the above structure for easy retrieval and programmatic use.
